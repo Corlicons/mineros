@@ -10,7 +10,12 @@ MineROS allows the user to fully control a MC bot using ROS services and topics,
 
 ## Installation
 ### Install correct minecraft version
-Google this yourself
+In the minecraft launcher
+<p align="center">
+  <img src="./docs/pics/mc_install_1.png" alt="Minecraft install step 1" width="30%"/>
+  <img src="./docs/pics/mc_install_2.png" alt="Minecraft install step 2" width="30%"/>
+  <img src="./docs/pics/mc_install_3.png" alt="Minecraft install step 3" width="30%"/>
+</p>
 
 ### Clone repo
 ```bash
