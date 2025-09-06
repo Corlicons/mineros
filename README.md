@@ -16,6 +16,15 @@ All commands should be run from the root of this repo
 Google this yourself
 
 ### Install nodejs
+Check if node is already installed
+```shell
+node -v
+```
+If it is below v20, remove it:
+```shell
+sudp apt remove nodejs --autoremove
+```
+Then install the correct version
 ```shell
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
