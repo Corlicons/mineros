@@ -46,14 +46,24 @@ class MyFirstNode(Node):
         # To make the bot move in a square we need to know the bots location and we need to be able to move the bot
         # set up the required publisher and subscriber here:
         
+        last_result_log_time = 0.0
+        result_log_interval = 1.0  # seconds
         while 1:
             while self.bot_pos_service.wait_for_service(timeout_sec=1.0) == False:
                 self.get_logger().info('Waiting for service')
             request = BotPos.Request()
             future = self.bot_pos_service.call_async(request)
             rclpy.spin_until_future_complete(self, future)
-            self.get_logger().info('Result: %s' % future.result())
-        
+
+            result = future.result()
+            now = time.time()
+            if now - last_result_log_time > result_log_interval:
+                if isinstance(result.bot_pos, PoseStamped):
+                    pos = result.bot_pos.pose.position
+                    self.get_logger().info(f'Result: Point(x={pos.x:.2f}, y={pos.y:.2f}, z={pos.z:.2f})')
+                else:
+                    self.get_logger().warn(f'Result is not a PoseStamped: {result.bot_pos}')
+                last_result_log_time = now        
         
         
 def main(args=None):
@@ -61,4 +71,4 @@ def main(args=None):
     node = MyFirstNode()
     rclpy.spin(node)
     node.destroy_node()
-    rclpy.shutdown()    
+    rclpy.shutdown()
