@@ -42,38 +42,34 @@ cd -
 
 ### Building the Mineros bot
 1) Init submodules to pull the mineros interfaces
-```bash
+```shell
 git submodule update --init --recursive
 ```
 2) Generate the javascript ROS message interface
-```bash
+```shell
 cd src/mineros-js
 npx generate-ros-messages
 cd -
 ```
 3) Build the ROS packages:
-```bash
+```shell
 colcon build --symlink-install
 # When developing, symlink makes it so we don't need to build every time we change a file.
-# This does not apply to c++ files as they need to be compiled
+# This does not apply to C++ files as they need to be compiled
 ```
 
 ## Running
 Make sure a minecraft server is running on localhost:25565
 Source the workspace:
-```bash
+```shell
 source install/setup.sh
 ```
-Then launch the example
-```bash
-ros2 launch mineros-js example.launch.py
+Then launch the mineros bot
+```shell
+ros2 launch mineros-js bot.launch.py
 ```
-
-Then launch your own script to control the bot
-
 ___
 ## API doc
-
 Following is general api information and links to api docs.
 
 ### Minecraft data
@@ -86,7 +82,6 @@ Several of the services and topics require knowledge of the minecraft block ids,
 
 #### Item ids
 on the boot up of the mineros system all item ids are written to the file ` docs/items.txt `. Note that blocks dont have the same id as items
-
 
 ### Links to API docs
 - [Movement](docs/movement.md)
