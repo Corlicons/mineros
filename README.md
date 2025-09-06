@@ -10,61 +10,76 @@ MineROS allows the user to fully control a mc bot using ros services and topics,
 - Minecraft version = 1.20
 
 ## Installation
+All commands should be run from the root of this repo
 
 ### Install correct minecraft version
 Google this yourself
 
 ### Install nodejs
-``` sudo apt install nodejs ```
-
-``` sudo apt install npm ```
+```shell
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+# Verify correct version:
+node -v   # should show v20.x
+npm -v    # should be avove 9.0
+```
 
 ### Install npm packages
-``` npm install --save mineflayer-collectblock ```
+```shell
+cd src/mineros-js
+npm install mineflayer-collectblock rclnodejs
+cd -
+``` 
 
-``` npm i rclnodejs ``` 
-
-### Building the mineros bot
-
+### Building the Mineros bot
 1) Init submodules to pull the mineros interfaces
 ```bash
 git submodule update --init --recursive
-git submodule update --recursive
 ```
-
-2) from root run `colcon build` to build the ros packages
-
-3) Generate the javascript Ros message interface
+2) Generate the javascript ROS message interface
 ```bash
 cd src/mineros-js
 npx generate-ros-messages
+cd -
 ```
-
+3) Build the ROS packages:
+```bash
+colcon build --symlink-install
+# When developing, symlink makes it so we don't need to build every time we change a file.
+# This does not apply to c++ files as they need to be compiled
+```
 
 ## Running
 Make sure a minecraft server is running on localhost:25565
-` ros2 launch src/mineros-js/launch/example.launch.py `
+Source the workspace:
+```bash
+source install/setup.sh
+```
+Then launch the example
+```bash
+ros2 launch mineros-js example.launch.py
+```
 
 Then launch your own script to control the bot
 
 ___
-# API doc
+## API doc
 
 Following is general api information and links to api docs.
 
-## Minecraft data
+### Minecraft data
 ```
 IMPORTANT: BLOCKS DO NOT HAVE THE SAME IDS AS ITEMS
 ```
 
-### Block ids
+#### Block ids
 Several of the services and topics require knowledge of the minecraft block ids, this can be found here REMEBER TO SELECT THE CORRECT MINECRAFT VERSION: 1.20 http://prismarinejs.github.io/minecraft-data/?d=blocks
 
-### Item ids
+#### Item ids
 on the boot up of the mineros system all item ids are written to the file ` docs/items.txt `. Note that blocks dont have the same id as items
 
 
-## Links to API docs
+### Links to API docs
 - [Movement](docs/movement.md)
 - [Navigation](docs/navigation.md)
 - [Mining](docs/mining.md)
