@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import time
 import rclpy
 from rclpy.node import Node
@@ -6,7 +7,7 @@ from typing import Any
 from geometry_msgs.msg import PoseStamped
 from mineros_inter.srv import BlockInfo, BotPos
 
-class MyFirstFSM(Node):
+class MyFirstNode(Node):
     """
     This class encompases the skeleton of a ROS2 node. It inherits from the class Node, which is the base class
     for all nodes in ROS2. The class Node is defined in the rclpy package. The class Node has a constructor that
@@ -39,6 +40,7 @@ class MyFirstFSM(Node):
             BotPos,
             '/mineros/get_bot_position',
         )
+        self.get_logger().info('My first node created')
         
         # Task 2
         # To make the bot move in a square we need to know the bots location and we need to be able to move the bot
@@ -56,7 +58,7 @@ class MyFirstFSM(Node):
         
 def main(args=None):
     rclpy.init(args=args)
-    node = MyFirstFSM()
+    node = MyFirstNode()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()    
